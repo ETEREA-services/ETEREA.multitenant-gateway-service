@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Client as Cliente
+    participant Gateway as API Gateway
+    participant Consul as Consul Discovery
+    participant Service as Microservicio X
+
+    Client->>+Gateway: GET /api/servicio-x/recurso
+    Gateway->>+Consul: Descubrir servicio
+    Consul-->>-Gateway: URI de servicio
+    Gateway->>+Service: GET /recurso
+    Service-->>-Gateway: Respuesta (Datos)
+    Gateway-->>-Client: Respuesta (Datos)

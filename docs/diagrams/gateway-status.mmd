@@ -1,0 +1,12 @@
+stateDiagram-v2
+    [*] --> Starting: Iniciando
+    Starting --> Running: Iniciado Exitosamente
+    Starting --> Degraded: Fallo en Configuración
+    
+    Running --> Degraded: Pérdida de Conexión con Servicios Críticos
+    Running --> Down: Error Crítico Inesperado
+    
+    Degraded --> Running: Servicios Restaurados
+    Degraded --> Down: Fallo Mayor
+    
+    Down --> Starting: Reinicio Manual/Automático
