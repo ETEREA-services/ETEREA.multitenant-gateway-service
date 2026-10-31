@@ -27,9 +27,13 @@ public class LoggingGlobalFilter implements GlobalFilter, Ordered {
             request.getURI(),
             request.getRemoteAddress() != null ? request.getRemoteAddress().getAddress().getHostAddress() : "unknown");
 
-        // Log request headers
+        // Log request headers, omitiendo credenciales
         request.getHeaders().forEach((key, values) -> {
-            log.debug("Request header: {} = {}", key, values);
+            if (esHeaderSensible(key)) {
+                log.debug("Request header: {} = [REDACTED]", key);
+            } else {
+                log.debug("Request header: {} = {}", key, values);
+            }
         });
 
         // Log the route if available
@@ -49,9 +53,13 @@ public class LoggingGlobalFilter implements GlobalFilter, Ordered {
                     exchange.getRequest().getURI(),
                     duration);
 
-                // Log response headers
+                // Log response headers, omitiendo credenciales
                 response.getHeaders().forEach((key, values) -> {
-                    log.debug("Response header: {} = {}", key, values);
+                    if (esHeaderSensible(key)) {
+                        log.debug("Response header: {} = [REDACTED]", key);
+                    } else {
+                        log.debug("Response header: {} = {}", key, values);
+                    }
                 });
             })
             .doOnError(throwable -> {
@@ -63,6 +71,14 @@ public class LoggingGlobalFilter implements GlobalFilter, Ordered {
                     throwable.getMessage(),
                     throwable);
             });
+    }
+
+    private boolean esHeaderSensible(String key) {
+        String header = key.toLowerCase(java.util.Locale.ROOT);
+        return "authorization".equals(header)
+                || "cookie".equals(header)
+                || "set-cookie".equals(header)
+                || "proxy-authorization".equals(header);
     }
 
     @Override
