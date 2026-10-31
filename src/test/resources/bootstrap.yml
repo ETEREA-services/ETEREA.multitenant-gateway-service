@@ -1,0 +1,11 @@
+app:
+  jwt:
+    secret: test-only-secret-0123456789-abcdef
+    issuer: eterea.multitenant
+
+spring:
+  cloud:
+    consul:
+      enabled: false
+      discovery:
+        enabled: false
