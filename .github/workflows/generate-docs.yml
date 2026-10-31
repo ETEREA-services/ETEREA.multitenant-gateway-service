@@ -92,6 +92,14 @@ jobs:
               <script>
                   document.getElementById('update-date').textContent = new Date().toLocaleString('es-AR');
 
+                  // Escapa el contenido de los diagramas antes de inyectarlo con innerHTML:
+                  // evita que tokens con "<" y ">" se interpreten como HTML y corrompan
+                  // el texto del diagrama al re-serializarlo el navegador.
+                  const escapeHtml = (text) => text
+                      .replace(/&/g, '&amp;')
+                      .replace(/</g, '&lt;')
+                      .replace(/>/g, '&gt;');
+
                   // --- Dependency Tree ---
                   fetch('dependency-tree.txt')
                       .then(response => response.text())
@@ -143,7 +151,7 @@ jobs:
                       .then(response => response.text())
                       .then(data => {
                           const sequenceContainer = document.getElementById('sequence-diagram');
-                          sequenceContainer.innerHTML = '<h2>🔄 Diagrama de Secuencia: Flujo de Petición</h2><div class="mermaid">' + data + '</div>';
+                          sequenceContainer.innerHTML = '<h2>🔄 Diagrama de Secuencia: Flujo de Petición</h2><div class="mermaid">' + escapeHtml(data) + '</div>';
                           mermaid.init(undefined, sequenceContainer.querySelector('.mermaid'));
                       });
 
@@ -152,7 +160,7 @@ jobs:
                       .then(response => response.text())
                       .then(data => {
                           const stateContainer = document.getElementById('state-diagram');
-                          stateContainer.innerHTML = '<h2>🚦 Diagrama de Estado: Ciclo de Vida del Gateway</h2><div class="mermaid">' + data + '</div>';
+                          stateContainer.innerHTML = '<h2>🚦 Diagrama de Estado: Ciclo de Vida del Gateway</h2><div class="mermaid">' + escapeHtml(data) + '</div>';
                           mermaid.init(undefined, stateContainer.querySelector('.mermaid'));
                       });
               

@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.1.0</version>
+		<version>4.1.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.termascacheuta.eterea</groupId>
 	<artifactId>multitenant-gateway-service</artifactId>
- 	   <version>2.2.1</version>
+ 	   <version>3.0.0</version>
 	<name>ETEREA.multitenant-gateway-service</name>
 	<description>multitenant-gateway-service</description>
 	<url/>
@@ -28,7 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>25</java.version>
-		<spring-cloud.version>2025.1.2</spring-cloud.version>
+		<spring-cloud.version>2025.1.4</spring-cloud.version>
 		<sonar.organization>eterea-services</sonar.organization>
 		<sonar.projectKey>ETEREA-services_ETEREA.multitenant-gateway-service</sonar.projectKey>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -49,6 +49,10 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -110,7 +114,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.13</version>
+				<version>0.8.16</version>
 				<executions>
 					<execution>
 						<goals>

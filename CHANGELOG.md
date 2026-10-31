@@ -5,10 +5,31 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-10-31
+### Added
+- feat(security): `SecurityConfig` configura el gateway como OAuth2 Resource Server y valida JWT HS256 (issuer y claim `authorities`).
+- feat(security): dependencia `spring-boot-starter-oauth2-resource-server` en `pom.xml`.
+- test: `src/test/resources/bootstrap.yml` con Consul deshabilitado y un secreto JWT de prueba.
+- docs: `AGENTS.md` con el rol, la configuración y las reglas de cambio del servicio.
+
+### Changed
+- feat(security)!: **BREAKING** — todas las rutas requieren `Authorization: Bearer <JWT>`; solo `/api/brain/auth/login`, `/api/brain/auth/refresh`, `/api/brain/auth/logout`, `/actuator/health` y `/actuator/info` quedan públicos.
+- feat(routing)!: **BREAKING** — la ruta `multitenant-core-service` reemplaza `/api/v1/auth/**` por `/api/brain/**`.
+- feat(config)!: **BREAKING** — se agregan `app.jwt.secret` (`APP_JWT_SECRET`, mínimo 32 caracteres) y `app.jwt.issuer` (`APP_JWT_ISSUER`); el arranque falla si el secreto no alcanza el mínimo.
+- feat(actuator): `management.endpoint.health.show-details` pasa de `always` a `when-authorized`.
+- fix(logging): `LoggingGlobalFilter` redacta `Authorization`, `Cookie`, `Set-Cookie` y `Proxy-Authorization` en los logs de request y response.
+- build(deps): Actualización de Spring Boot de 4.1.0 a 4.1.2.
+- build(deps): Actualización de Spring Cloud a 2025.1.4.
+- build(deps): Actualización de JaCoCo de 0.8.13 a 0.8.16.
+- docs(pipeline): el visor de documentación escapa el contenido de los diagramas `.mmd` antes de inyectarlo con `innerHTML`.
+
+### Removed
+- feat(routing)!: **BREAKING** — se elimina la ruta `/api/v1/auth/**`.
+
 ## [2.2.1] - 2026-06-28
 ### Changed
 - build(deps): Actualización de Spring Boot de 4.0.6 a 4.1.0
-- build(deps): Actualización de Spring Cloud de 2025.1.0 a 2025.1.2
+- build(deps): Actualización de Spring Cloud de 2025.1.0 a 2025.1.3
 
 ## [2.2.0] - 2026-05-27
 ### Changed
@@ -139,6 +160,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - Configuración básica de Maven
 - Estructura inicial del proyecto
 
+[3.0.0]: https://github.com/ETEREA-services/ETEREA.multitenant-gateway-service/compare/v2.2.1...v3.0.0
 [2.2.1]: https://github.com/ETEREA-services/ETEREA.multitenant-gateway-service/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/ETEREA-services/ETEREA.multitenant-gateway-service/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/ETEREA-services/ETEREA.multitenant-gateway-service/compare/v2.0.1...v2.1.0

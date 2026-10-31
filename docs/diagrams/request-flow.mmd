@@ -1,12 +1,16 @@
 sequenceDiagram
     participant Client as Cliente
     participant Gateway as API Gateway
+    participant Security as Validador JWT HS256
     participant Consul as Consul Discovery
-    participant Service as Microservicio X
+    participant Service as multitenant-core-service
 
-    Client->>+Gateway: GET /api/servicio-x/recurso
+    Client->>+Gateway: Petición con Authorization Bearer JWT
+    Gateway->>+Security: Validar firma, issuer y claim authorities
+    Security-->>-Gateway: Token válido (autenticado)
+    Note over Gateway,Security: Rutas públicas: login, refresh, logout, health e info
     Gateway->>+Consul: Descubrir servicio
     Consul-->>-Gateway: URI de servicio
-    Gateway->>+Service: GET /recurso
+    Gateway->>+Service: Reenviar petición
     Service-->>-Gateway: Respuesta (Datos)
     Gateway-->>-Client: Respuesta (Datos)
