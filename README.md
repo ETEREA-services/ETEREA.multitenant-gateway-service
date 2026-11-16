@@ -17,6 +17,7 @@
 [![SonarCloud Code Smells](https://sonarcloud.io/api/project_badges/measure?project=ETEREA-services_ETEREA.multitenant-gateway-service&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=ETEREA-services_ETEREA.multitenant-gateway-service)
 [![SonarCloud Duplication](https://sonarcloud.io/api/project_badges/measure?project=ETEREA-services_ETEREA.multitenant-gateway-service&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=ETEREA-services_ETEREA.multitenant-gateway-service)
 [![SonarCloud Coverage](https://sonarcloud.io/api/project_badges/measure?project=ETEREA-services_ETEREA.multitenant-gateway-service&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ETEREA-services_ETEREA.multitenant-gateway-service)
+[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-blue.svg)](https://github.com/features/actions)
 
 ## Description
 ETEREA.multitenant-gateway-service is a Spring Cloud Gateway service that acts as the entry point for all microservices in the ETEREA ecosystem. It provides routing, load balancing, and security features for the distributed system.
@@ -60,11 +61,11 @@ mvn spring-boot:run
 ### Docker
 Build and run with Docker:
 ```bash
-docker build -t eterea-multitenant-gateway-service:3.0.0 .
+docker build -t eterea-multitenant-gateway-service:3.0.1 .
 docker run -p 8080:8080 \
   -e APP_JWT_SECRET='cambiar-por-un-secreto-de-32-bytes-minimo' \
   -e APP_JWT_ISSUER=eterea.multitenant \
-  eterea-multitenant-gateway-service:3.0.0
+  eterea-multitenant-gateway-service:3.0.1
 ```
 
 ## Configuration
@@ -108,6 +109,9 @@ Other `/actuator/**` endpoints require the `ADMIN` authority.
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ## Recent Changes
+- **v3.0.1 Release**
+- Added: `Deploy develop` workflow (`.github/workflows/deploy-develop.yml`) that verifies `develop` with `mvn -B verify` on pull requests and pushes.
+- Added: On push to `develop`, the workflow publishes the Docker image tagged with the commit SHA and deploys it with the self-hosted `develop` runner.
 - **v3.0.0 Release**
 - Breaking: Added JWT validation with Spring Security OAuth2 Resource Server (HS256). All routes now require `Authorization: Bearer <JWT>`, except login, refresh, logout, health and info.
 - Breaking: Replaced route `/api/v1/auth/**` with `/api/brain/**` in `multitenant-core-service`.

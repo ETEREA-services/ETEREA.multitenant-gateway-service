@@ -146,6 +146,9 @@ Si una ruta devuelve 404:
 - Rama actual: `main`.
 - No crear ramas, commitear ni pushear sin autorización explícita.
 - El repo tiene CI en `.github/workflows/maven.yml` (build + SonarCloud + imagen).
+- `.github/workflows/deploy-develop.yml`: en `develop` verifica con `mvn -B verify`,
+  publica la imagen Docker etiquetada con el SHA del commit y despliega con el
+  runner self-hosted `develop` (script `deploy-multitenant-gateway-develop.sh`).
 
 ## Documentación y grafo
 

@@ -5,6 +5,12 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.1] - 2026-11-16
+### Added
+- ci(actions): nuevo workflow `Deploy develop` (`.github/workflows/deploy-develop.yml`) que, en PR y push a `develop`, verifica el proyecto con `mvn -B verify` sobre JDK 25 (Temurin).
+- ci(docker): en push a `develop`, el workflow construye y publica la imagen Docker etiquetada con `github.sha` (`DOCKER_IMAGE_NAME` del entorno `develop`) reutilizando la caché de GitHub Actions.
+- ci(deploy): el workflow despliega en el runner self-hosted `develop` mediante `/home/daniel/docker/multitenant/deploy-multitenant-gateway-develop.sh` con el SHA del commit.
+
 ## [3.0.0] - 2026-10-31
 ### Added
 - feat(security): `SecurityConfig` configura el gateway como OAuth2 Resource Server y valida JWT HS256 (issuer y claim `authorities`).
@@ -160,6 +166,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - Configuración básica de Maven
 - Estructura inicial del proyecto
 
+[3.0.1]: https://github.com/ETEREA-services/ETEREA.multitenant-gateway-service/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/ETEREA-services/ETEREA.multitenant-gateway-service/compare/v2.2.1...v3.0.0
 [2.2.1]: https://github.com/ETEREA-services/ETEREA.multitenant-gateway-service/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/ETEREA-services/ETEREA.multitenant-gateway-service/compare/v2.1.0...v2.2.0

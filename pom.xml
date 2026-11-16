@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.termascacheuta.eterea</groupId>
 	<artifactId>multitenant-gateway-service</artifactId>
- 	   <version>3.0.0</version>
+ 	   <version>3.0.1</version>
 	<name>ETEREA.multitenant-gateway-service</name>
 	<description>multitenant-gateway-service</description>
 	<url/>
